@@ -53,10 +53,11 @@ const img = {
 };
 
 /* =========================================================
-   PLACEHOLDERS DA PROFISSIONAL
+   DADOS DA PROFISSIONAL
 ========================================================= */
+
 const clinicAddress =
-  'Rua Exemplo, 100, Lourdes, Belo Horizonte - MG';
+  'Rua dos Aimorés, 2001 - Lourdes, Belo Horizonte - MG, 30140-074';
 
 const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   clinicAddress
@@ -67,6 +68,7 @@ const wazeUrl = `https://www.waze.com/ul?q=${encodeURIComponent(
 )}&navigate=yes`;
 
 const instagramUrl = 'https://instagram.com/marina.nutri';
+
 const whatsappUrl =
   'https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Marina!%20Quero%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional.';
 
@@ -808,8 +810,7 @@ export default function App() {
             <MagneticButton>Quero minha consulta</MagneticButton>
           </div>
         </section>
-
-        {/* LOCALIZAÇÃO */}
+                {/* LOCALIZAÇÃO */}
         <section
           ref={locationRef}
           id="localizacao"
@@ -870,9 +871,7 @@ export default function App() {
                   Endereço
                 </span>
 
-                <h3>
-                  {clinicAddress}
-                </h3>
+                <h3>{clinicAddress}</h3>
 
                 <p>
                   Atendimento presencial com hora marcada. Para atendimento
@@ -1081,7 +1080,6 @@ export default function App() {
     </div>
   );
 }
-
 function AnimateGoal({
   goal,
 }: {
@@ -1098,7 +1096,9 @@ function AnimateGoal({
       transition={{ duration: 0.45 }}
       className="goal-content"
     >
-      <span>{goal ? 'Seu ponto de partida' : 'Uma abordagem possível'}</span>
+      <span>
+        {goal ? 'Seu ponto de partida' : 'Uma abordagem possível'}
+      </span>
 
       <h3>
         {goal?.title ?? 'Alimentação que cabe na vida real.'}
