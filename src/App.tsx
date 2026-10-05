@@ -53,42 +53,27 @@ const img = {
 };
 
 /* =========================================================
-   ENDEREÇO / LINKS
+   PLACEHOLDERS DA PROFISSIONAL
 ========================================================= */
-
 const clinicAddress =
   'Rua dos Aimorés, 2001 - Lourdes, Belo Horizonte - MG, 30140-074';
 
-/*
-  Google Maps:
-  abre diretamente o endereço/local no Google Maps.
-*/
-const googleMapsUrl =
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    clinicAddress
-  )}`;
+const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  clinicAddress
+)}`;
 
-/*
-  Waze:
-  abre o destino e solicita início da navegação.
-*/
-const wazeUrl =
-  `https://www.waze.com/ul?q=${encodeURIComponent(
-    clinicAddress
-  )}&navigate=yes`;
+const wazeUrl = `https://www.waze.com/ul?q=${encodeURIComponent(
+  clinicAddress
+)}&navigate=yes`;
 
 const instagramUrl = 'https://instagram.com/marina.nutri';
 
 const whatsappUrl =
   'https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Marina!%20Quero%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional.';
 
-/*
-  Mapa incorporado dentro do site.
-*/
-const mapEmbedUrl =
-  `https://www.google.com/maps?q=${encodeURIComponent(
-    clinicAddress
-  )}&output=embed`;
+const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
+  clinicAddress
+)}&output=embed`;
 
 const fade = {
   hidden: {
@@ -173,6 +158,14 @@ export default function App() {
   const [goal, setGoal] = useState('');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  /*
+    Controla o CTA fixo mobile.
+
+    false = usuário ainda está na Hero
+    true  = usuário saiu da Hero
+  */
+  const [showStickyCta, setShowStickyCta] = useState(false);
+
   const heroRef = useRef<HTMLElement>(null);
   const processRef = useRef<HTMLElement>(null);
   const locationRef = useRef<HTMLElement>(null);
@@ -214,6 +207,7 @@ export default function App() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -221,6 +215,39 @@ export default function App() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [menuOpen]);
+
+  /*
+    CTA FIXO MOBILE
+
+    Enquanto a Hero estiver visível:
+      → CTA fica escondido.
+
+    Assim que o usuário sair da Hero:
+      → CTA aparece subindo pela parte inferior.
+
+    Ao voltar para a Hero:
+      → CTA desaparece novamente.
+  */
+  useEffect(() => {
+    const hero = heroRef.current;
+
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowStickyCta(!entry.isIntersecting);
+      },
+      {
+        threshold: 0.05,
+      }
+    );
+
+    observer.observe(hero);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   const goals = [
     {
@@ -459,7 +486,9 @@ export default function App() {
             >
               <p className="giant-copy">
                 Você não precisa aprender a viver de dieta.
-                <em>Precisa aprender a comer dentro da vida que já existe.</em>
+                <em>
+                  Precisa aprender a comer dentro da vida que já existe.
+                </em>
               </p>
 
               <MagneticButton light href="#metodo">
@@ -491,7 +520,9 @@ export default function App() {
                   <motion.button
                     type="button"
                     key={item.id}
-                    className={`goal-item ${goal === item.id ? 'active' : ''}`}
+                    className={`goal-item ${
+                      goal === item.id ? 'active' : ''
+                    }`}
                     onClick={() => setGoal(item.id)}
                     whileHover={{ x: 7 }}
                     whileTap={{ scale: 0.985 }}
@@ -513,13 +544,17 @@ export default function App() {
                 />
 
                 <div className="goal-preview-overlay" />
+
                 <AnimateGoal goal={selectedGoal} />
               </motion.div>
             </div>
 
             <div className="section-cta-row dark-row">
               <span>Já sabe qual é o seu objetivo?</span>
-              <MagneticButton href="#contato">Quero começar</MagneticButton>
+
+              <MagneticButton href="#contato">
+                Quero começar
+              </MagneticButton>
             </div>
           </div>
         </section>
@@ -549,7 +584,10 @@ export default function App() {
 
           <div className="process-story page-width">
             <div className="process-image-wrap">
-              <motion.div style={{ y: processY }} className="process-image">
+              <motion.div
+                style={{ y: processY }}
+                className="process-image"
+              >
                 <img
                   src={img.consultation}
                   alt="Nutricionista conversando com paciente durante consulta"
@@ -663,7 +701,9 @@ export default function App() {
                   decoding="async"
                 />
 
-                <div className="gallery-glass-tag">Estratégia</div>
+                <div className="gallery-glass-tag">
+                  Estratégia
+                </div>
 
                 <figcaption>
                   <span>01</span>
@@ -719,7 +759,9 @@ export default function App() {
                 </span>
               </div>
 
-              <MagneticButton href="#contato">Quero começar</MagneticButton>
+              <MagneticButton href="#contato">
+                Quero começar
+              </MagneticButton>
             </div>
           </div>
         </section>
@@ -800,7 +842,9 @@ export default function App() {
           </div>
 
           <div className="experience-panel">
-            <SectionLabel dark>Uma experiência diferente</SectionLabel>
+            <SectionLabel dark>
+              Uma experiência diferente
+            </SectionLabel>
 
             <h2>
               Você não recebe um plano.
@@ -813,7 +857,10 @@ export default function App() {
                 'Acompanhamento próximo',
                 'Ajustes ao longo do processo',
               ].map((item, i) => (
-                <motion.div key={item} whileHover={{ x: 5 }}>
+                <motion.div
+                  key={item}
+                  whileHover={{ x: 5 }}
+                >
                   <span>0{i + 1}</span>
                   <p>{item}</p>
                   <Check size={16} />
@@ -821,7 +868,9 @@ export default function App() {
               ))}
             </div>
 
-            <MagneticButton>Quero minha consulta</MagneticButton>
+            <MagneticButton>
+              Quero minha consulta
+            </MagneticButton>
           </div>
         </section>
 
@@ -868,7 +917,9 @@ export default function App() {
                   </div>
 
                   <div>
-                    <strong>Marina · Nutrição & performance</strong>
+                    <strong>
+                      Marina · Nutrição & performance
+                    </strong>
                     <span>Belo Horizonte · MG</span>
                   </div>
                 </div>
@@ -879,14 +930,19 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.1,
+                }}
               >
                 <span className="location-eyebrow">
                   <MapPin size={14} />
                   Endereço
                 </span>
 
-                <h3>{clinicAddress}</h3>
+                <h3>
+                  {clinicAddress}
+                </h3>
 
                 <p>
                   Atendimento presencial com hora marcada. Para atendimento
@@ -894,11 +950,10 @@ export default function App() {
                 </p>
 
                 <div className="location-actions">
-                  {/* GOOGLE MAPS */}
                   <a
                     href={googleMapsUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                     className="route-card route-google"
                   >
                     <span className="route-icon">
@@ -907,17 +962,16 @@ export default function App() {
 
                     <span>
                       <strong>Google Maps</strong>
-                      <small>Abrir localização</small>
+                      <small>Abrir rota</small>
                     </span>
 
                     <ArrowUpRight size={17} />
                   </a>
 
-                  {/* WAZE */}
                   <a
                     href={wazeUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noreferrer"
                     className="route-card route-waze"
                   >
                     <span className="route-icon">
@@ -926,14 +980,17 @@ export default function App() {
 
                     <span>
                       <strong>Waze</strong>
-                      <small>Iniciar navegação</small>
+                      <small>Navegar até o consultório</small>
                     </span>
 
                     <ArrowUpRight size={17} />
                   </a>
                 </div>
 
-                <a href="#contato" className="location-contact-link">
+                <a
+                  href="#contato"
+                  className="location-contact-link"
+                >
                   Prefere confirmar antes?
                   <span>Falar com a Marina</span>
                   <ArrowRight size={15} />
@@ -961,14 +1018,18 @@ export default function App() {
             <div className="faq-list">
               {faqs.map(([question, answer], index) => (
                 <motion.div
-                  className={`faq-item ${openFaq === index ? 'open' : ''}`}
+                  className={`faq-item ${
+                    openFaq === index ? 'open' : ''
+                  }`}
                   key={question}
                   layout
                 >
                   <button
                     type="button"
                     onClick={() =>
-                      setOpenFaq(openFaq === index ? null : index)
+                      setOpenFaq(
+                        openFaq === index ? null : index
+                      )
                     }
                     aria-expanded={openFaq === index}
                     aria-controls={`faq-answer-${index}`}
@@ -984,8 +1045,10 @@ export default function App() {
                     id={`faq-answer-${index}`}
                     initial={false}
                     animate={{
-                      height: openFaq === index ? 'auto' : 0,
-                      opacity: openFaq === index ? 1 : 0,
+                      height:
+                        openFaq === index ? 'auto' : 0,
+                      opacity:
+                        openFaq === index ? 1 : 0,
                     }}
                     className="faq-answer"
                   >
@@ -1007,15 +1070,24 @@ export default function App() {
         </section>
 
         {/* CONTACT */}
-        <section id="contato" className="contact-section">
+        <section
+          id="contato"
+          className="contact-section"
+        >
           <div className="contact-bg">
-            <img src={img.hero} alt="" loading="lazy" />
+            <img
+              src={img.hero}
+              alt=""
+              loading="lazy"
+            />
           </div>
 
           <div className="contact-overlay" />
 
           <div className="page-width contact-content">
-            <SectionLabel dark>Seu próximo passo</SectionLabel>
+            <SectionLabel dark>
+              Seu próximo passo
+            </SectionLabel>
 
             <h2>
               Vamos construir uma relação mais leve com a sua alimentação?
@@ -1077,23 +1149,62 @@ export default function App() {
             </span>
           </div>
 
-          <span>© 2026 Marina Azevedo</span>
+          <span>
+            © 2026 Marina Azevedo
+          </span>
 
-          <a href="#inicio">Voltar ao topo ↑</a>
+          <a href="#inicio">
+            Voltar ao topo ↑
+          </a>
         </div>
       </footer>
 
-      <motion.a
-        href="#contato"
-        className="mobile-sticky-cta"
-        initial={{ y: 80 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 1.2 }}
-        whileTap={{ scale: 0.97 }}
-      >
-        <span>Agendar consulta</span>
-        <ArrowRight size={17} />
-      </motion.a>
+      {/* =====================================================
+          CTA MOBILE FIXO
+
+          O CTA só existe depois que o usuário sai da Hero.
+
+          Hero:
+          → escondido
+
+          Próxima seção em diante:
+          → sobe pela parte inferior
+          → permanece fixo
+
+          Voltou para Hero:
+          → desce e desaparece
+      ===================================================== */}
+      <AnimatePresence>
+        {showStickyCta && (
+          <motion.a
+            href="#contato"
+            className="mobile-sticky-cta"
+            initial={{
+              y: 100,
+              opacity: 0,
+            }}
+            animate={{
+              y: 0,
+              opacity: 1,
+            }}
+            exit={{
+              y: 100,
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.55,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
+          >
+            <span>Agendar consulta</span>
+
+            <ArrowRight size={17} />
+          </motion.a>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -1109,17 +1220,28 @@ function AnimateGoal({
   return (
     <motion.div
       key={goal?.title ?? 'default'}
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45 }}
+      initial={{
+        opacity: 0,
+        y: 15,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.45,
+      }}
       className="goal-content"
     >
       <span>
-        {goal ? 'Seu ponto de partida' : 'Uma abordagem possível'}
+        {goal
+          ? 'Seu ponto de partida'
+          : 'Uma abordagem possível'}
       </span>
 
       <h3>
-        {goal?.title ?? 'Alimentação que cabe na vida real.'}
+        {goal?.title ??
+          'Alimentação que cabe na vida real.'}
       </h3>
 
       <p>
