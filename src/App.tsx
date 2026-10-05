@@ -53,28 +53,42 @@ const img = {
 };
 
 /* =========================================================
-   DADOS DA PROFISSIONAL
+   ENDEREÇO / LINKS
 ========================================================= */
 
 const clinicAddress =
   'Rua dos Aimorés, 2001 - Lourdes, Belo Horizonte - MG, 30140-074';
 
-const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-  clinicAddress
-)}`;
+/*
+  Google Maps:
+  abre diretamente o endereço/local no Google Maps.
+*/
+const googleMapsUrl =
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    clinicAddress
+  )}`;
 
-const wazeUrl = `https://www.waze.com/ul?q=${encodeURIComponent(
-  clinicAddress
-)}&navigate=yes`;
+/*
+  Waze:
+  abre o destino e solicita início da navegação.
+*/
+const wazeUrl =
+  `https://www.waze.com/ul?q=${encodeURIComponent(
+    clinicAddress
+  )}&navigate=yes`;
 
 const instagramUrl = 'https://instagram.com/marina.nutri';
 
 const whatsappUrl =
   'https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Marina!%20Quero%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional.';
 
-const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
-  clinicAddress
-)}&output=embed`;
+/*
+  Mapa incorporado dentro do site.
+*/
+const mapEmbedUrl =
+  `https://www.google.com/maps?q=${encodeURIComponent(
+    clinicAddress
+  )}&output=embed`;
 
 const fade = {
   hidden: {
@@ -810,7 +824,8 @@ export default function App() {
             <MagneticButton>Quero minha consulta</MagneticButton>
           </div>
         </section>
-                {/* LOCALIZAÇÃO */}
+
+        {/* LOCALIZAÇÃO */}
         <section
           ref={locationRef}
           id="localizacao"
@@ -879,10 +894,11 @@ export default function App() {
                 </p>
 
                 <div className="location-actions">
+                  {/* GOOGLE MAPS */}
                   <a
                     href={googleMapsUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="route-card route-google"
                   >
                     <span className="route-icon">
@@ -891,16 +907,17 @@ export default function App() {
 
                     <span>
                       <strong>Google Maps</strong>
-                      <small>Abrir rota</small>
+                      <small>Abrir localização</small>
                     </span>
 
                     <ArrowUpRight size={17} />
                   </a>
 
+                  {/* WAZE */}
                   <a
                     href={wazeUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="route-card route-waze"
                   >
                     <span className="route-icon">
@@ -909,7 +926,7 @@ export default function App() {
 
                     <span>
                       <strong>Waze</strong>
-                      <small>Navegar até o consultório</small>
+                      <small>Iniciar navegação</small>
                     </span>
 
                     <ArrowUpRight size={17} />
@@ -1080,6 +1097,7 @@ export default function App() {
     </div>
   );
 }
+
 function AnimateGoal({
   goal,
 }: {
