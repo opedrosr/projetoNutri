@@ -28,28 +28,25 @@ import {
 ========================================================= */
 const img = {
   hero:
-    'https://images.pexels.com/photos/12889997/pexels-photo-12889997.jpeg?auto=compress&cs=tinysrgb&w=1800',
+    'https://images.pexels.com/photos/8554941/pexels-photo-8554941.jpeg?auto=compress&cs=tinysrgb&w=1800',
 
-  nutritionist:
-    'https://images.pexels.com/photos/15319035/pexels-photo-15319035.jpeg?auto=compress&cs=tinysrgb&w=1400',
+  lashArtist:
+    'https://images.pexels.com/photos/34930095/pexels-photo-34930095.jpeg?auto=compress&cs=tinysrgb&w=1400',
 
-  consultation:
-    'https://images.pexels.com/photos/8844553/pexels-photo-8844553.jpeg?auto=compress&cs=tinysrgb&w=1400',
-
-  food:
-    'https://images.pexels.com/photos/15319047/pexels-photo-15319047.jpeg?auto=compress&cs=tinysrgb&w=1200',
-
-  salad:
-    'https://images.pexels.com/photos/5622194/pexels-photo-5622194.jpeg?auto=compress&cs=tinysrgb&w=1200',
-
-  fruit:
-    'https://images.pexels.com/photos/15319047/pexels-photo-15319047.jpeg?auto=compress&cs=tinysrgb&w=1000',
-
-  office:
-    'https://images.pexels.com/photos/15319035/pexels-photo-15319035.jpeg?auto=compress&cs=tinysrgb&w=1400',
+  application:
+    'https://images.pexels.com/photos/36930354/pexels-photo-36930354.jpeg?auto=compress&cs=tinysrgb&w=1400',
 
   detail:
-    'https://images.pexels.com/photos/15319016/pexels-photo-15319016.jpeg?auto=compress&cs=tinysrgb&w=1200',
+    'https://images.pexels.com/photos/5128235/pexels-photo-5128235.jpeg?auto=compress&cs=tinysrgb&w=1200',
+
+  resultOne:
+    'https://images.pexels.com/photos/7446922/pexels-photo-7446922.jpeg?auto=compress&cs=tinysrgb&w=1200',
+
+  resultTwo:
+    'https://images.pexels.com/photos/29391092/pexels-photo-29391092.jpeg?auto=compress&cs=tinysrgb&w=1000',
+
+  resultThree:
+    'https://images.pexels.com/photos/33723106/pexels-photo-33723106.jpeg?auto=compress&cs=tinysrgb&w=1200',
 };
 
 /* =========================================================
@@ -66,10 +63,9 @@ const wazeUrl = `https://www.waze.com/ul?q=${encodeURIComponent(
   clinicAddress
 )}&navigate=yes`;
 
-const instagramUrl = 'https://instagram.com/marina.nutri';
-
+const instagramUrl = 'https://instagram.com/lua.lash';
 const whatsappUrl =
-  'https://wa.me/5531999999999?text=Ol%C3%A1%2C%20Marina!%20Quero%20saber%20mais%20sobre%20o%20acompanhamento%20nutricional.';
+  'https://wa.me/5531999999999?text=Ol%C3%A1%2C%20L%C3%BAa!%20Quero%20agendar%20meu%20hor%C3%A1rio.';
 
 const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
   clinicAddress
@@ -156,15 +152,8 @@ function MagneticButton({
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [goal, setGoal] = useState('');
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  /*
-    Controla o CTA fixo mobile.
-
-    false = usuário ainda está na Hero
-    true  = usuário saiu da Hero
-  */
   const [showStickyCta, setShowStickyCta] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const heroRef = useRef<HTMLElement>(null);
   const processRef = useRef<HTMLElement>(null);
@@ -207,7 +196,6 @@ export default function App() {
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
@@ -216,82 +204,62 @@ export default function App() {
     };
   }, [menuOpen]);
 
-  /*
-    CTA FIXO MOBILE
-
-    Enquanto a Hero estiver visível:
-      → CTA fica escondido.
-
-    Assim que o usuário sair da Hero:
-      → CTA aparece subindo pela parte inferior.
-
-    Ao voltar para a Hero:
-      → CTA desaparece novamente.
-  */
-  useEffect(() => {
-    const hero = heroRef.current;
-
-    if (!hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowStickyCta(!entry.isIntersecting);
-      },
-      {
-        threshold: 0.05,
-      }
-    );
-
-    observer.observe(hero);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   const goals = [
     {
-      id: 'performance',
-      title: 'Performance',
-      text: 'Comer melhor para treinar, recuperar e render mais.',
+      id: 'natural',
+      title: 'Natural',
+      text: 'Leve, definido e discreto para valorizar o olhar sem pesar.',
     },
     {
-      id: 'body',
-      title: 'Composição corporal',
-      text: 'Estratégia para mudar o corpo sem transformar a rotina em castigo.',
+      id: 'elongated',
+      title: 'Alongado',
+      text: 'Mais presença e definição para quem gosta de um olhar marcante.',
     },
     {
-      id: 'routine',
-      title: 'Rotina',
-      text: 'Organizar a alimentação para uma vida real, com trabalho, viagens e imprevistos.',
+      id: 'volume',
+      title: 'Volume',
+      text: 'Volume construído respeitando a estrutura e a resistência dos seus fios.',
     },
     {
-      id: 'relationship',
-      title: 'Relação com a comida',
-      text: 'Mais clareza e autonomia para fazer escolhas sem viver em extremos.',
+      id: 'custom',
+      title: 'Personalizado',
+      text: 'Mapeamento personalizado para encontrar o efeito que realmente combina com você.',
     },
   ];
 
   const faqs = [
     [
-      'A consulta é presencial ou online?',
-      'As duas opções podem existir. No demo, você pode adaptar essa informação para a realidade da profissional.',
+      'Quanto tempo dura o procedimento?',
+      'Em média, entre 1h30 e 2h30, dependendo da técnica escolhida e da quantidade de fios.',
     ],
     [
-      'Preciso seguir uma dieta rígida?',
-      'A proposta da página é comunicar uma abordagem individualizada. O plano é construído considerando rotina, preferências e objetivo.',
+      'Como escolher o efeito ideal?',
+      'Durante o atendimento, avaliamos seus olhos, fios e preferência para indicar a curvatura e o volume mais adequados.',
     ],
     [
-      'Como funciona o acompanhamento?',
-      'Depois da primeira consulta, a profissional acompanha a evolução e faz ajustes conforme a resposta e a rotina do paciente.',
+      'Preciso fazer manutenção?',
+      'Sim. A manutenção mantém o resultado bonito e acompanha o ciclo natural dos seus cílios.',
     ],
     [
-      'Como agendo?',
-      'O botão de agendamento leva diretamente para o WhatsApp da profissional, facilitando o primeiro contato.',
+      'Como agendo meu horário?',
+      'O botão de agendamento leva você direto para o WhatsApp da Lúa para confirmar disponibilidade e escolher o melhor horário.',
     ],
   ];
 
   const selectedGoal = goals.find((item) => item.id === goal);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowStickyCta(!entry.isIntersecting),
+      { threshold: 0.08 }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -303,17 +271,17 @@ export default function App() {
 
       <header className="site-nav">
         <a href="#inicio" className="brand" onClick={closeMenu}>
-          <span className="brand-mark">M</span>
+          <span className="brand-mark">L</span>
 
           <span>
-            <strong>MARINA</strong>
-            <small>Nutrição & performance</small>
+            <strong>LÚA</strong>
+            <small>Lash designer</small>
           </span>
         </a>
 
         <nav className="desktop-nav">
-          <a href="#metodo">Método</a>
-          <a href="#resultados">Resultados</a>
+          <a href="#metodo">O processo</a>
+          <a href="#resultados">Trabalhos</a>
           <a href="#sobre">Sobre</a>
           <a href="#localizacao">Localização</a>
         </nav>
@@ -373,12 +341,12 @@ export default function App() {
             </a>
 
             <a href="#contato" onClick={closeMenu}>
-              Agendar consulta
+              Agendar horário
               <ArrowRight size={17} />
             </a>
 
             <div className="mobile-menu-footer">
-              <span>MARINA · NUTRIÇÃO & PERFORMANCE</span>
+              <span>LÚA · LASH DESIGNER</span>
             </div>
           </motion.div>
         )}
@@ -393,7 +361,7 @@ export default function App() {
           >
             <img
               src={img.hero}
-              alt="Nutricionista em ambiente profissional"
+              alt="Aplicação de extensão de cílios"
               fetchPriority="high"
               decoding="async"
             />
@@ -410,24 +378,23 @@ export default function App() {
               className="hero-copy"
             >
               <SectionLabel dark>
-                Nutrição esportiva & estética
+                Lash designer · Belo Horizonte
               </SectionLabel>
 
               <h1>
-                Seu corpo não precisa de <em>mais uma dieta.</em>
-                <span>Precisa de uma estratégia.</span>
+                Seu olhar não precisa de <em>excesso.</em>
+                <span>Precisa da técnica certa.</span>
               </h1>
 
               <p>
-                Uma abordagem individual para transformar alimentação em uma
-                parte possível — e sustentável — da sua rotina.
+                Extensão de cílios pensada para o formato dos seus olhos, sua rotina e o resultado que você procura.
               </p>
 
               <div className="hero-buttons">
-                <MagneticButton>Quero começar</MagneticButton>
+                <MagneticButton>Agendar meu horário</MagneticButton>
 
                 <a href="#metodo" className="text-link light-link">
-                  Conhecer o método
+                  Conhecer o processo
                   <ArrowDown size={15} />
                 </a>
               </div>
@@ -446,8 +413,8 @@ export default function App() {
               </span>
 
               <div>
-                <strong>Atendimento individual</strong>
-                <small>Plano construído para a sua rotina.</small>
+                <strong>Atendimento personalizado</strong>
+                <small>Mapeamento pensado para os seus fios.</small>
               </div>
             </motion.div>
           </div>
@@ -473,7 +440,7 @@ export default function App() {
               viewport={{ once: true, amount: 0.35 }}
             >
               <SectionLabel>
-                Uma nutrição que começa antes do prato
+                Um olhar pensado antes de cada fio
               </SectionLabel>
             </motion.div>
 
@@ -485,14 +452,12 @@ export default function App() {
               className="intro-statement"
             >
               <p className="giant-copy">
-                Você não precisa aprender a viver de dieta.
-                <em>
-                  Precisa aprender a comer dentro da vida que já existe.
-                </em>
+                Você não precisa seguir um efeito que não combina com você.
+                <em>O melhor resultado começa quando a técnica respeita o seu olhar.</em>
               </p>
 
               <MagneticButton light href="#metodo">
-                Como eu trabalho
+                Como funciona
               </MagneticButton>
             </motion.div>
           </div>
@@ -502,15 +467,14 @@ export default function App() {
         <section className="goal-section">
           <div className="page-width">
             <div className="goal-header">
-              <SectionLabel dark>Comece por aqui</SectionLabel>
+              <SectionLabel dark>Escolha seu estilo</SectionLabel>
 
               <h2>
-                O que você quer <em>mudar?</em>
+                Qual efeito combina com você?
               </h2>
 
               <p>
-                Escolha o ponto que mais se aproxima do seu momento. A
-                experiência muda conforme a sua resposta.
+                Escolha o resultado que mais combina com você. A experiência é ajustada ao formato dos seus olhos e aos seus fios.
               </p>
             </div>
 
@@ -520,9 +484,7 @@ export default function App() {
                   <motion.button
                     type="button"
                     key={item.id}
-                    className={`goal-item ${
-                      goal === item.id ? 'active' : ''
-                    }`}
+                    className={`goal-item ${goal === item.id ? 'active' : ''}`}
                     onClick={() => setGoal(item.id)}
                     whileHover={{ x: 7 }}
                     whileTap={{ scale: 0.985 }}
@@ -537,24 +499,20 @@ export default function App() {
 
               <motion.div layout className="goal-preview">
                 <img
-                  src={goal ? img.detail : img.food}
-                  alt="Nutricionista trabalhando com planejamento alimentar"
+                  src={goal ? img.detail : img.resultOne}
+                  alt="Lash designer preparando o atendimento"
                   loading="lazy"
                   decoding="async"
                 />
 
                 <div className="goal-preview-overlay" />
-
                 <AnimateGoal goal={selectedGoal} />
               </motion.div>
             </div>
 
             <div className="section-cta-row dark-row">
-              <span>Já sabe qual é o seu objetivo?</span>
-
-              <MagneticButton href="#contato">
-                Quero começar
-              </MagneticButton>
+              <span>Já sabe qual efeito você quer?</span>
+              <MagneticButton href="#contato">Agendar meu horário</MagneticButton>
             </div>
           </div>
         </section>
@@ -566,40 +524,36 @@ export default function App() {
           className="process-section section-light"
         >
           <div className="page-width process-intro">
-            <SectionLabel>O método</SectionLabel>
+            <SectionLabel>O processo</SectionLabel>
 
             <div>
               <h2>
-                Menos <em>prescrição.</em>
+                Menos fórmula pronta.
                 <br />
-                Mais estratégia.
+                Mais personalização.
               </h2>
 
               <p>
-                A consulta não termina quando você recebe um plano. Ela começa
-                quando entendemos como fazer esse plano funcionar na sua vida.
+                O procedimento começa antes da aplicação. Primeiro entendemos seus fios, seu formato de olho e o efeito que você quer alcançar.
               </p>
             </div>
           </div>
 
           <div className="process-story page-width">
             <div className="process-image-wrap">
-              <motion.div
-                style={{ y: processY }}
-                className="process-image"
-              >
+              <motion.div style={{ y: processY }} className="process-image">
                 <img
-                  src={img.consultation}
-                  alt="Nutricionista conversando com paciente durante consulta"
+                  src={img.application}
+                  alt="Lash designer realizando aplicação de extensão de cílios"
                   loading="lazy"
                   decoding="async"
                 />
               </motion.div>
 
               <div className="process-stamp">
-                MARINA
+                LÚA
                 <br />
-                <span>nutrição</span>
+                <span>lash design</span>
               </div>
 
               <div className="image-glass-note">
@@ -608,8 +562,8 @@ export default function App() {
                 </span>
 
                 <div>
-                  <strong>Individualidade</strong>
-                  <small>Cada estratégia parte de uma rotina real.</small>
+                  <strong>Personalização</strong>
+                  <small>Cada aplicação parte do seu olhar.</small>
                 </div>
               </div>
             </div>
@@ -618,23 +572,23 @@ export default function App() {
               {[
                 [
                   '01',
-                  'Entender',
-                  'Sua rotina, seus hábitos, seu histórico e aquilo que realmente importa para você.',
+                  'Avaliar',
+                  'Formato dos olhos, curvatura, espessura dos fios e o efeito que você deseja.',
                 ],
                 [
                   '02',
-                  'Estruturar',
-                  'Uma estratégia alimentar que faça sentido para seus horários, preferências e objetivo.',
+                  'Mapear',
+                  'Definimos comprimento, curvatura e distribuição para criar um resultado equilibrado.',
                 ],
                 [
                   '03',
-                  'Acompanhar',
-                  'Observar o que funciona, o que trava e ajustar sem transformar cada deslize em fracasso.',
+                  'Aplicar',
+                  'Cada fio é aplicado com precisão, respeitando a estrutura natural dos seus cílios.',
                 ],
                 [
                   '04',
-                  'Evoluir',
-                  'Construir autonomia para que você não dependa de uma dieta nova a cada fase da vida.',
+                  'Finalizar',
+                  'Você sai com o efeito definido e orientações simples para manter o resultado bonito.',
                 ],
               ].map(([number, title, text], index) => (
                 <motion.div
@@ -657,12 +611,11 @@ export default function App() {
 
               <div className="process-inline-cta">
                 <span>
-                  Um processo pensado para continuar funcionando depois da
-                  consulta.
+                  Um processo pensado para entregar um resultado bonito também depois do procedimento.
                 </span>
 
                 <a href="#contato">
-                  Conhecer a experiência
+                  Conhecer o atendimento
                   <ArrowRight size={15} />
                 </a>
               </div>
@@ -674,15 +627,14 @@ export default function App() {
         <section id="resultados" className="results-section">
           <div className="page-width">
             <div className="results-top">
-              <SectionLabel dark>O que muda</SectionLabel>
+              <SectionLabel dark>O resultado</SectionLabel>
 
               <h2>
-                Resultado não é só <em>número.</em>
+                O resultado está nos <em>detalhes.</em>
               </h2>
 
               <p>
-                Uma boa estratégia também aparece na rotina: mais clareza,
-                mais consistência e mais segurança para fazer escolhas.
+                Um bom trabalho aparece no acabamento: leveza, simetria, definição e um efeito que conversa com o seu rosto.
               </p>
             </div>
 
@@ -695,19 +647,17 @@ export default function App() {
                 className="gallery-large"
               >
                 <img
-                  src={img.salad}
-                  alt="Mulher em contexto de alimentação saudável"
+                  src={img.resultOne}
+                  alt="Cliente após procedimento de extensão de cílios"
                   loading="lazy"
                   decoding="async"
                 />
 
-                <div className="gallery-glass-tag">
-                  Estratégia
-                </div>
+                <div className="gallery-glass-tag">Mapeamento</div>
 
                 <figcaption>
                   <span>01</span>
-                  Comer bem sem transformar a alimentação em uma prisão.
+                  Naturalidade sem perder definição.
                 </figcaption>
               </motion.figure>
 
@@ -719,15 +669,15 @@ export default function App() {
                 className="gallery-small gallery-up"
               >
                 <img
-                  src={img.fruit}
-                  alt="Nutricionista em atendimento"
+                  src={img.resultTwo}
+                  alt="Detalhe do resultado de lash"
                   loading="lazy"
                   decoding="async"
                 />
 
                 <figcaption>
                   <span>02</span>
-                  Escolhas mais simples.
+                  Curvatura que valoriza o olhar.
                 </figcaption>
               </motion.figure>
 
@@ -739,15 +689,15 @@ export default function App() {
                 className="gallery-small gallery-down"
               >
                 <img
-                  src={img.office}
-                  alt="Nutricionista em ambiente profissional"
+                  src={img.resultThree}
+                  alt="Aplicação de extensão de cílios"
                   loading="lazy"
                   decoding="async"
                 />
 
                 <figcaption>
                   <span>03</span>
-                  Acompanhamento de perto.
+                  Acabamento feito fio a fio.
                 </figcaption>
               </motion.figure>
             </div>
@@ -755,13 +705,11 @@ export default function App() {
             <div className="results-cta">
               <div>
                 <span>
-                  O próximo resultado começa antes da primeira consulta.
+                  O próximo resultado começa antes da primeira aplicação.
                 </span>
               </div>
 
-              <MagneticButton href="#contato">
-                Quero começar
-              </MagneticButton>
+              <MagneticButton href="#contato">Agendar meu horário</MagneticButton>
             </div>
           </div>
         </section>
@@ -775,55 +723,52 @@ export default function App() {
                 whileInView="show"
                 initial="hidden"
                 viewport={{ once: true, amount: 0.25 }}
-                src={img.nutritionist}
-                alt="Nutricionista Marina Azevedo em ambiente profissional"
+                src={img.lashArtist}
+                alt="Lúa Lash Designer em ambiente profissional"
                 loading="lazy"
                 decoding="async"
               />
 
               <div className="about-caption">
-                <span>Marina Azevedo</span>
-                <small>Nutricionista · CRN 00000</small>
+                <span>LÚA</span>
+                <small>Lash Designer · Belo Horizonte</small>
               </div>
             </div>
 
             <div className="about-copy">
-              <SectionLabel>Quem está por trás</SectionLabel>
+              <SectionLabel>Sobre a profissional</SectionLabel>
 
               <h2>
-                Nutrição com <em>ciência, contexto</em> e proximidade.
+                Por trás de cada olhar, existe <em>técnica, precisão</em> e cuidado.
               </h2>
 
               <p>
-                Meu trabalho é ajudar você a construir uma alimentação que
-                tenha lógica no papel e, principalmente, que consiga existir
-                na segunda-feira, no trabalho, na viagem e nos dias corridos.
+                Eu sou a Lúa, lash designer especializada em criar extensões personalizadas para valorizar o olhar sem apagar a identidade de cada cliente. Cada atendimento começa com uma análise individual dos seus olhos e da condição dos seus fios.
               </p>
 
               <p>
-                Sem transformar comida em culpa. Sem prometer atalhos. Com
-                estratégia, acompanhamento e ajustes ao longo do caminho.
+                Acredito que extensão de cílios não precisa seguir um padrão. O efeito, a curvatura e o volume são escolhidos de acordo com você, sua rotina e o resultado que deseja.
               </p>
 
               <div className="about-facts">
                 <div>
-                  <strong>CRN</strong>
-                  <span>00000</span>
+                  <strong>Especialidade</strong>
+                  <span>Extensão de cílios</span>
                 </div>
 
                 <div>
                   <strong>Atendimento</strong>
-                  <span>Online + presencial</span>
+                  <span>Com hora marcada</span>
                 </div>
 
                 <div>
-                  <strong>Foco</strong>
-                  <span>Esportivo · Estética</span>
+                  <strong>Técnicas</strong>
+                  <span>Clássico · Volume · Híbrido</span>
                 </div>
               </div>
 
               <a href="#contato" className="text-link">
-                Conversar com a Marina
+                Falar com a Lúa
                 <ArrowRight size={15} />
               </a>
             </div>
@@ -835,32 +780,27 @@ export default function App() {
           <div className="experience-image">
             <img
               src={img.detail}
-              alt="Nutricionista trabalhando em planejamento alimentar"
+              alt="Lash designer realizando procedimento"
               loading="lazy"
               decoding="async"
             />
           </div>
 
           <div className="experience-panel">
-            <SectionLabel dark>
-              Uma experiência diferente
-            </SectionLabel>
+            <SectionLabel dark>Uma experiência pensada para você</SectionLabel>
 
             <h2>
-              Você não recebe um plano.
-              <em>Você aprende a construir o seu.</em>
+              Você não recebe um efeito pronto.
+              <em>Seu olhar é construído para você.</em>
             </h2>
 
             <div className="experience-list">
               {[
-                'Estratégia personalizada',
-                'Acompanhamento próximo',
-                'Ajustes ao longo do processo',
+                'Mapeamento personalizado',
+                'Aplicação cuidadosa',
+                'Orientação para manutenção',
               ].map((item, i) => (
-                <motion.div
-                  key={item}
-                  whileHover={{ x: 5 }}
-                >
+                <motion.div key={item} whileHover={{ x: 5 }}>
                   <span>0{i + 1}</span>
                   <p>{item}</p>
                   <Check size={16} />
@@ -868,9 +808,7 @@ export default function App() {
               ))}
             </div>
 
-            <MagneticButton>
-              Quero minha consulta
-            </MagneticButton>
+            <MagneticButton>Quero meu horário</MagneticButton>
           </div>
         </section>
 
@@ -886,12 +824,11 @@ export default function App() {
 
               <div>
                 <h2>
-                  Sua consulta começa no caminho até <em>aqui.</em>
+                  Seu atendimento começa no caminho até <em>aqui.</em>
                 </h2>
 
                 <p>
-                  Um espaço pensado para receber você com calma. Veja o
-                  endereço e escolha a melhor forma de chegar.
+                  Um espaço pensado para você chegar, desacelerar e aproveitar o atendimento. Veja o endereço e escolha a melhor forma de chegar.
                 </p>
               </div>
             </div>
@@ -905,7 +842,7 @@ export default function App() {
                 transition={{ duration: 0.8 }}
               >
                 <iframe
-                  title="Localização do consultório"
+                  title="Localização do studio"
                   src={mapEmbedUrl}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -917,9 +854,7 @@ export default function App() {
                   </div>
 
                   <div>
-                    <strong>
-                      Marina · Nutrição & performance
-                    </strong>
+                    <strong>LÚA · Lash Designer</strong>
                     <span>Belo Horizonte · MG</span>
                   </div>
                 </div>
@@ -930,10 +865,7 @@ export default function App() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.1,
-                }}
+                transition={{ duration: 0.8, delay: 0.1 }}
               >
                 <span className="location-eyebrow">
                   <MapPin size={14} />
@@ -945,8 +877,7 @@ export default function App() {
                 </h3>
 
                 <p>
-                  Atendimento presencial com hora marcada. Para atendimento
-                  online, não é necessário se deslocar.
+                  Atendimento com hora marcada. Reserve seu horário e venha com calma para o seu atendimento.
                 </p>
 
                 <div className="location-actions">
@@ -980,19 +911,16 @@ export default function App() {
 
                     <span>
                       <strong>Waze</strong>
-                      <small>Navegar até o consultório</small>
+                      <small>Navegar até o studio</small>
                     </span>
 
                     <ArrowUpRight size={17} />
                   </a>
                 </div>
 
-                <a
-                  href="#contato"
-                  className="location-contact-link"
-                >
+                <a href="#contato" className="location-contact-link">
                   Prefere confirmar antes?
-                  <span>Falar com a Marina</span>
+                  <span>Falar com a Lúa</span>
                   <ArrowRight size={15} />
                 </a>
               </motion.div>
@@ -1004,32 +932,28 @@ export default function App() {
         <section className="faq-section section-light">
           <div className="page-width faq-grid">
             <div>
-              <SectionLabel>Dúvidas</SectionLabel>
+              <SectionLabel>Antes de agendar</SectionLabel>
 
               <h2>
-                Antes de <em>começar.</em>
+                Antes de <em>agendar.</em>
               </h2>
 
               <p>
-                Algumas respostas para deixar o primeiro passo mais simples.
+                Algumas respostas para deixar seu primeiro agendamento mais simples.
               </p>
             </div>
 
             <div className="faq-list">
               {faqs.map(([question, answer], index) => (
                 <motion.div
-                  className={`faq-item ${
-                    openFaq === index ? 'open' : ''
-                  }`}
+                  className={`faq-item ${openFaq === index ? 'open' : ''}`}
                   key={question}
                   layout
                 >
                   <button
                     type="button"
                     onClick={() =>
-                      setOpenFaq(
-                        openFaq === index ? null : index
-                      )
+                      setOpenFaq(openFaq === index ? null : index)
                     }
                     aria-expanded={openFaq === index}
                     aria-controls={`faq-answer-${index}`}
@@ -1045,10 +969,8 @@ export default function App() {
                     id={`faq-answer-${index}`}
                     initial={false}
                     animate={{
-                      height:
-                        openFaq === index ? 'auto' : 0,
-                      opacity:
-                        openFaq === index ? 1 : 0,
+                      height: openFaq === index ? 'auto' : 0,
+                      opacity: openFaq === index ? 1 : 0,
                     }}
                     className="faq-answer"
                   >
@@ -1063,44 +985,34 @@ export default function App() {
             <span>Ainda ficou alguma dúvida?</span>
 
             <a href="#contato">
-              Falar com a Marina
+              Falar com a Lúa
               <ArrowRight size={15} />
             </a>
           </div>
         </section>
 
         {/* CONTACT */}
-        <section
-          id="contato"
-          className="contact-section"
-        >
+        <section id="contato" className="contact-section">
           <div className="contact-bg">
-            <img
-              src={img.hero}
-              alt=""
-              loading="lazy"
-            />
+            <img src={img.hero} alt="" loading="lazy" />
           </div>
 
           <div className="contact-overlay" />
 
           <div className="page-width contact-content">
-            <SectionLabel dark>
-              Seu próximo passo
-            </SectionLabel>
+            <SectionLabel dark>Seu próximo passo</SectionLabel>
 
             <h2>
-              Vamos construir uma relação mais leve com a sua alimentação?
+              Vamos encontrar o efeito certo para o seu olhar?
             </h2>
 
             <p>
-              Agende uma conversa inicial e descubra como funciona o
-              acompanhamento.
+              Agende seu horário e descubra como funciona o atendimento.
             </p>
 
             <div className="contact-actions">
               <MagneticButton href={whatsappUrl}>
-                Agendar consulta
+                Agendar horário
               </MagneticButton>
 
               <a
@@ -1131,7 +1043,7 @@ export default function App() {
                 rel="noreferrer"
               >
                 <Instagram size={15} />
-                @marina.nutri
+                @lua.lash
               </a>
             </div>
           </div>
@@ -1141,66 +1053,32 @@ export default function App() {
       <footer className="footer">
         <div className="page-width footer-inner">
           <div className="brand footer-brand">
-            <span className="brand-mark">M</span>
+            <span className="brand-mark">L</span>
 
             <span>
-              <strong>MARINA</strong>
-              <small>Nutrição & performance</small>
+              <strong>LÚA</strong>
+              <small>Lash designer</small>
             </span>
           </div>
 
-          <span>
-            © 2026 Marina Azevedo
-          </span>
+          <span>© 2026 LÚA</span>
 
-          <a href="#inicio">
-            Voltar ao topo ↑
-          </a>
+          <a href="#inicio">Voltar ao topo ↑</a>
         </div>
       </footer>
 
-      {/* =====================================================
-          CTA MOBILE FIXO
-
-          O CTA só existe depois que o usuário sai da Hero.
-
-          Hero:
-          → escondido
-
-          Próxima seção em diante:
-          → sobe pela parte inferior
-          → permanece fixo
-
-          Voltou para Hero:
-          → desce e desaparece
-      ===================================================== */}
       <AnimatePresence>
         {showStickyCta && (
           <motion.a
             href="#contato"
             className="mobile-sticky-cta"
-            initial={{
-              y: 100,
-              opacity: 0,
-            }}
-            animate={{
-              y: 0,
-              opacity: 1,
-            }}
-            exit={{
-              y: 100,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.55,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            whileTap={{
-              scale: 0.97,
-            }}
+            initial={{ y: 90, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 90, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            whileTap={{ scale: 0.97 }}
           >
-            <span>Agendar consulta</span>
-
+            <span>Agendar horário</span>
             <ArrowRight size={17} />
           </motion.a>
         )}
@@ -1220,37 +1098,24 @@ function AnimateGoal({
   return (
     <motion.div
       key={goal?.title ?? 'default'}
-      initial={{
-        opacity: 0,
-        y: 15,
-      }}
-      animate={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.45,
-      }}
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45 }}
       className="goal-content"
     >
-      <span>
-        {goal
-          ? 'Seu ponto de partida'
-          : 'Uma abordagem possível'}
-      </span>
+      <span>{goal ? 'Seu ponto de partida' : 'Uma escolha possível'}</span>
 
       <h3>
-        {goal?.title ??
-          'Alimentação que cabe na vida real.'}
+        {goal?.title ?? 'Um efeito que combina com você.'}
       </h3>
 
       <p>
         {goal?.text ??
-          'Escolha uma direção ao lado e veja como a experiência pode começar a partir do que você realmente precisa.'}
+          'Escolha um estilo ao lado e veja como a experiência pode começar a partir do resultado que você procura.'}
       </p>
 
       <a href="#contato">
-        Quero conversar
+        Quero agendar
         <ArrowRight size={15} />
       </a>
     </motion.div>
